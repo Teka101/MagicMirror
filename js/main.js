@@ -18,13 +18,11 @@ jQuery.fn.outerHTML = function(s) {
         : jQuery("<p>").append(this.eq(0).clone()).html();
 };
 
-function roundVal(temp)
-{
+function roundVal(temp) {
 	return Math.round(temp * 10) / 10;
 }
 
-function kmh2beaufort(kmh)
-{
+function kmh2beaufort(kmh) {
 	var speeds = [1, 5, 11, 19, 28, 38, 49, 61, 74, 88, 102, 117, 1000];
 	for (var beaufort in speeds) {
 		var speed = speeds[beaufort];
@@ -33,6 +31,33 @@ function kmh2beaufort(kmh)
 		}
 	}
 	return 12;
+}
+
+function addWeatherClass(elt, weather, small) {
+	var iconTable = {
+			'01d':'wi-day-sunny',
+			'02d':'wi-day-cloudy',
+			'03d':'wi-cloudy',
+			'04d':'wi-cloudy-windy',
+			'09d':'wi-showers',
+			'10d':'wi-rain',
+			'11d':'wi-thunderstorm',
+			'13d':'wi-snow',
+			'50d':'wi-fog',
+			'01n':'wi-night-clear',
+			'02n':'wi-night-cloudy',
+			'03n':'wi-night-cloudy',
+			'04n':'wi-night-cloudy',
+			'09n':'wi-night-showers',
+			'10n':'wi-night-rain',
+			'11n':'wi-night-thunderstorm',
+			'13n':'wi-night-snow',
+			'50n':'wi-night-alt-cloudy-windy'
+		};
+
+	var iconClass = iconTable[weather.icon];
+	elt.addClass('icon' + (!!small ? '-small' : '')).addClass('dimmed').addClass('wi').addClass(iconClass);
+	return elt;
 }
 
 jQuery(document).ready(function($) {
@@ -186,30 +211,7 @@ jQuery(document).ready(function($) {
 
 	})();
 
-	(function updateCurrentWeather()
-	{
-		var iconTable = {
-			'01d':'wi-day-sunny',
-			'02d':'wi-day-cloudy',
-			'03d':'wi-cloudy',
-			'04d':'wi-cloudy-windy',
-			'09d':'wi-showers',
-			'10d':'wi-rain',
-			'11d':'wi-thunderstorm',
-			'13d':'wi-snow',
-			'50d':'wi-fog',
-			'01n':'wi-night-clear',
-			'02n':'wi-night-cloudy',
-			'03n':'wi-night-cloudy',
-			'04n':'wi-night-cloudy',
-			'09n':'wi-night-showers',
-			'10n':'wi-night-rain',
-			'11n':'wi-night-thunderstorm',
-			'13n':'wi-night-snow',
-			'50n':'wi-night-alt-cloudy-windy'
-		};
-
-
+	(function updateCurrentWeather() {
 		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
 
 			var temp = roundVal(json.main.temp);
@@ -218,8 +220,7 @@ jQuery(document).ready(function($) {
 
 			var wind = roundVal(json.wind.speed);
 
-			var iconClass = iconTable[json.weather[0].icon];
-			var icon = $('<span/>').addClass('icon').addClass('dimmed').addClass('wi').addClass(iconClass);
+			var icon = addWeatherClass($('<span/>'), json.weather[0]);
 			$('.temp').updateWithText(icon.outerHTML()+temp+'&deg;', 1000);
 
 			// var forecast = 'Min: '+temp_min+'&deg;, Max: '+temp_max+'&deg;';
@@ -243,8 +244,7 @@ jQuery(document).ready(function($) {
 		}, 60000);
 	})();
 
-	(function updateWeatherForecast()
-	{
+	(function updateWeatherForecast() {
 			$.getJSON('http://api.openweathermap.org/data/2.5/forecast', weatherParams, function(json, textStatus) {
 
 			var forecastData = {};
@@ -257,11 +257,13 @@ jQuery(document).ready(function($) {
 					forecastData[dateKey] = {
 						'timestamp':forecast.dt * 1000,
 						'temp_min':forecast.main.temp,
-						'temp_max':forecast.main.temp
+						'temp_max':forecast.main.temp,
+						'weather': {}
 					};
 				} else {
 					forecastData[dateKey]['temp_min'] = (forecast.main.temp < forecastData[dateKey]['temp_min']) ? forecast.main.temp : forecastData[dateKey]['temp_min'];
 					forecastData[dateKey]['temp_max'] = (forecast.main.temp > forecastData[dateKey]['temp_max']) ? forecast.main.temp : forecastData[dateKey]['temp_max'];
+					forecastData[dateKey]['weather'] = (forecast.weather[0] || forecastData[dateKey]['weather']);
 				}
 
 			}
@@ -277,6 +279,7 @@ jQuery(document).ready(function($) {
 				row.append($('<td/>').addClass('day').html(moment.weekdaysShort(dt.getDay())));
 				row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)));
 				row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)));
+				row.append($('<td/>').append(addWeatherClass($('<span/>'), forecast.weather, true)));
 
 				forecastTable.append(row);
 				opacity -= 0.155;
