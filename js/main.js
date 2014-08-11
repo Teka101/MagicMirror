@@ -201,13 +201,13 @@ jQuery(document).ready(function($) {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}
 
-		$('.compliment').updateWithText(compliments[compliment], 40000);
+		$('.compliment').updateWithText(compliments[compliment], 4000);
 
 		lastCompliment = compliment;
 
 		setTimeout(function() {
 			updateCompliment(true);
-		}, 30000);
+		}, 300000);
 
 	})();
 
