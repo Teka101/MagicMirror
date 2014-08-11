@@ -201,7 +201,7 @@ jQuery(document).ready(function($) {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}
 
-		$('.compliment').updateWithText(compliments[compliment], 4000);
+		$('.compliment').updateWithText(compliments[compliment], 40000);
 
 		lastCompliment = compliment;
 
