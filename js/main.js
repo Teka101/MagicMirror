@@ -1,5 +1,4 @@
-jQuery.fn.updateWithText = function(text, speed)
-{
+jQuery.fn.updateWithText = function(text, speed) {
 	var dummy = $('<div/>').html(text);
 
 	if ($(this).html() != dummy.html())
@@ -11,7 +10,7 @@ jQuery.fn.updateWithText = function(text, speed)
 			});
 		});
 	}
-}
+};
 
 jQuery.fn.outerHTML = function(s) {
     return s
@@ -119,29 +118,26 @@ jQuery(document).ready(function($) {
 					}
         		}
 
+        		var days, seconds, startDate;
                 if (e.startDate == undefined){
                     //some old events in Gmail Calendar is "start_date"
                     //FIXME: problems with Gmail's TimeZone
-            		var days = moment(e.DTSTART).diff(moment(), 'days');
-            		var seconds = moment(e.DTSTART).diff(moment(), 'seconds');
-                    var startDate = moment(e.DTSTART);
+            		days = moment(e.DTSTART).diff(moment(), 'days');
+            		seconds = moment(e.DTSTART).diff(moment(), 'seconds');
+                    startDate = moment(e.DTSTART);
                 } else {
-            		var days = moment(e.startDate).diff(moment(), 'days');
-            		var seconds = moment(e.startDate).diff(moment(), 'seconds');
-                    var startDate = moment(e.startDate);
+            		days = moment(e.startDate).diff(moment(), 'days');
+            		seconds = moment(e.startDate).diff(moment(), 'seconds');
+                    startDate = moment(e.startDate);
                 }
 
         		//only add fututre events, days doesn't work, we need to check seconds
         		if (seconds >= 0) {
-                    if (seconds <= 60*60*5 || seconds >= 60*60*24*2) {
-                        var time_string = moment(startDate).fromNow();
-                    }else {
-                        var time_string = moment(startDate).calendar()
-                    }
+        			var time_string = (seconds <= 60*60*5 || seconds >= 60*60*24*2) ? moment(startDate).fromNow() : moment(startDate).calendar();
 	        		eventList.push({'description':e.SUMMARY,'seconds':seconds,'days':time_string});
         		}
         	};
-        	eventList.sort(function(a,b){return a.seconds-b.seconds});
+        	eventList.sort(function(a,b) { return a.seconds-b.seconds; });
 
         	setTimeout(function() {
         		updateCalendarData();
@@ -211,7 +207,7 @@ jQuery(document).ready(function($) {
 			'11n':'wi-night-thunderstorm',
 			'13n':'wi-night-snow',
 			'50n':'wi-night-alt-cloudy-windy'
-		}
+		};
 
 
 		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
