@@ -246,8 +246,8 @@ function updateWeatherForecast() {
 			var row = $('<tr />').css('opacity', opacity);
 	
 			row.append($('<td/>').addClass('day').html(moment.weekdaysShort(dt.getDay())));
-			row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)));
 			row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)));
+			row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)));
 			row.append($('<td/>').append(addWeatherClass($('<span/>'), forecast.weather, true)));
 	
 			forecastTable.append(row);
