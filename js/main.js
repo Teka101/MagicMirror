@@ -39,51 +39,19 @@ var mainMirror = (function () {
 	});
 
 
-	function roundVal(temp) {
-		return Math.round(temp * 10) / 10;
+	// util functions
+
+	function round1Dec(x) {
+		return Math.round(x * 10) / 10;
 	}
-
-	function kmh2beaufort(kmh) {
-		var speeds = [1, 5.5, 11, 19, 28, 38, 49, 61, 74, 88, 102, 117, 1000];
-		for (var beaufort in speeds) {
-			var speed = speeds[beaufort];
-			if (speed > kmh) {
-				return beaufort;
-			}
-		}
-		return 12;
-	}
-
-	function addWeatherClass(elt, weather, small) {
-		var iconTable = {
-			'01d':'wi-day-sunny',
-			'02d':'wi-day-cloudy',
-			'03d':'wi-cloudy',
-			'04d':'wi-cloudy-windy',
-			'09d':'wi-showers',
-			'10d':'wi-rain',
-			'11d':'wi-thunderstorm',
-			'13d':'wi-snow',
-			'50d':'wi-fog',
-			'01n':'wi-night-clear',
-			'02n':'wi-night-cloudy',
-			'03n':'wi-night-cloudy',
-			'04n':'wi-night-cloudy',
-			'09n':'wi-night-showers',
-			'10n':'wi-night-rain',
-			'11n':'wi-night-thunderstorm',
-			'13n':'wi-night-snow',
-			'50n':'wi-night-alt-cloudy-windy'
-		};
-
-		return elt.addClass('icon' + (!!small ? '-small' : '')).addClass('dimmed').addClass('wi').addClass(iconTable[weather.icon]);
-	}
-
 
 	function repeat(func, interval) {
 		func();
 		setInterval(func, interval);
 	}
+
+
+	// reload after Git commit
 
 	function checkVersion() {
 		$.getJSON('githash.php', {}, function(json, textStatus) {
@@ -96,6 +64,7 @@ var mainMirror = (function () {
 		});
 	}
 
+
 	function updateTime() {
 	    var now = moment();
 	    var date = now.format('LLLL').split(' ',4);
@@ -104,6 +73,9 @@ var mainMirror = (function () {
 		$('.date').html(date);
 		$('.time').html(now.format('HH') + ':' + now.format('mm') + '<span class="sec">' + now.format('ss') + '</span>');
 	}
+
+
+	// calendar
 
 	var eventList = [];
 
@@ -156,7 +128,6 @@ var mainMirror = (function () {
 		});
 	}
 
-
 	function updateCalendar() {
 		table = $('<table/>').addClass('xsmall').addClass('calendar-table');
 		opacity = 1;
@@ -176,10 +147,13 @@ var mainMirror = (function () {
 		$('.calendar').updateWithText(table, 1000);
 	}
 
+
+	// compliments
+
 	var lastCompliment = null;
-	var compliment = null;
 
 	function updateCompliment() {
+		var compliment = null;
 		while (compliment === lastCompliment) {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}
@@ -189,12 +163,51 @@ var mainMirror = (function () {
 		lastCompliment = compliment;
 	}
 
+
+	// weather
+
+	function addWeatherClass(elt, weather, small) {
+		var iconTable = {
+			'01d':'wi-day-sunny',
+			'02d':'wi-day-cloudy',
+			'03d':'wi-cloudy',
+			'04d':'wi-cloudy-windy',
+			'09d':'wi-showers',
+			'10d':'wi-rain',
+			'11d':'wi-thunderstorm',
+			'13d':'wi-snow',
+			'50d':'wi-fog',
+			'01n':'wi-night-clear',
+			'02n':'wi-night-cloudy',
+			'03n':'wi-night-cloudy',
+			'04n':'wi-night-cloudy',
+			'09n':'wi-night-showers',
+			'10n':'wi-night-rain',
+			'11n':'wi-night-thunderstorm',
+			'13n':'wi-night-snow',
+			'50n':'wi-night-alt-cloudy-windy'
+		};
+
+		return elt.addClass('icon' + (!!small ? '-small' : '')).addClass('dimmed').addClass('wi').addClass(iconTable[weather.icon]);
+	}
+
+	function kmh2beaufort(kmh) {
+		var speeds = [1, 5.5, 11, 19, 28, 38, 49, 61, 74, 88, 102, 117, 1000];
+		for (var beaufort in speeds) {
+			var speed = speeds[beaufort];
+			if (speed > kmh) {
+				return beaufort;
+			}
+		}
+		return 12;
+	}
+
 	function updateCurrentWeather() {
 		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
 
-			var temp = roundVal(json.main.temp);
+			var temp = round1Dec(json.main.temp);
 
-			var wind = roundVal(json.wind.speed);
+			var wind = round1Dec(json.wind.speed);
 
 			var icon = addWeatherClass($('<span/>'), json.weather[0]);
 			$('.temp').updateWithText(icon.outerHTML()+temp+'&deg;', 1000);
@@ -244,8 +257,8 @@ var mainMirror = (function () {
 				var row = $('<tr />').css('opacity', opacity);
 		
 				row.append($('<td/>').addClass('day').html(moment.weekdaysShort(dt.getDay())));
-				row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)));
-				row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)));
+				row.append($('<td/>').addClass('temp-min').html(round1Dec(forecast.temp_min)));
+				row.append($('<td/>').addClass('temp-max').html(round1Dec(forecast.temp_max)));
 				row.append($('<td/>').append(addWeatherClass($('<span/>'), forecast.weather, true)));
 		
 				forecastTable.append(row);
@@ -255,6 +268,9 @@ var mainMirror = (function () {
 			$('.forecast').updateWithText(forecastTable, 1000);
 		});
 	}
+
+
+	// news
 
 	var news = [];
 	var newsIndex = 0;
