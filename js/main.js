@@ -174,12 +174,11 @@ var mainMirror = (function () {
 		$('.calendar').updateWithText(table,1000);
 	}
 
-	var lastCompliment;
-	var compliment;
+	var lastCompliment = null;
+	var compliment = null;
 
 	function updateCompliment() {
-	    //see compliments.js
-		while (compliment == lastCompliment) {
+		while (compliment === lastCompliment) {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}
 
@@ -261,8 +260,6 @@ var mainMirror = (function () {
 	function fetchNews() {
 		$.feedToJson({
 			feed:'http://feeds.nos.nl/nosjournaal?format=rss',
-			//feed:'http://www.nu.nl/feeds/rss/achterklap.rss',
-			//feed:'http://www.nu.nl/feeds/rss/opmerkelijk.rss',
 			success: function(data){
 				news = [];
 				for (var i in data.item) {
