@@ -168,24 +168,24 @@ var mainMirror = (function () {
 
 	function addWeatherClass(elt, weather, small) {
 		var iconTable = {
-			'01d':'wi-day-sunny',
-			'02d':'wi-day-cloudy',
-			'03d':'wi-cloudy',
-			'04d':'wi-cloudy-windy',
-			'09d':'wi-showers',
-			'10d':'wi-rain',
-			'11d':'wi-thunderstorm',
-			'13d':'wi-snow',
-			'50d':'wi-fog',
-			'01n':'wi-night-clear',
-			'02n':'wi-night-cloudy',
-			'03n':'wi-night-cloudy',
-			'04n':'wi-night-cloudy',
-			'09n':'wi-night-showers',
-			'10n':'wi-night-rain',
-			'11n':'wi-night-thunderstorm',
-			'13n':'wi-night-snow',
-			'50n':'wi-night-alt-cloudy-windy'
+			'01d': 'wi-day-sunny',
+			'02d': 'wi-day-cloudy',
+			'03d': 'wi-cloudy',
+			'04d': 'wi-cloudy-windy',
+			'09d': 'wi-showers',
+			'10d': 'wi-rain',
+			'11d': 'wi-thunderstorm',
+			'13d': 'wi-snow',
+			'50d': 'wi-fog',
+			'01n': 'wi-night-clear',
+			'02n': 'wi-night-cloudy',
+			'03n': 'wi-night-cloudy',
+			'04n': 'wi-night-cloudy',
+			'09n': 'wi-night-showers',
+			'10n': 'wi-night-rain',
+			'11n': 'wi-night-thunderstorm',
+			'13n': 'wi-night-snow',
+			'50n': 'wi-night-alt-cloudy-windy'
 		};
 
 		return elt.addClass('icon' + (!!small ? '-small' : '')).addClass('dimmed').addClass('wi').addClass(iconTable[weather.icon]);
@@ -203,31 +203,26 @@ var mainMirror = (function () {
 	}
 
 	function updateCurrentWeather() {
-		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
-
-			var temp = round1Dec(json.main.temp);
-
-			var wind = round1Dec(json.wind.speed);
-
+		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json) {
 			var icon = addWeatherClass($('<span/>'), json.weather[0]);
-			$('.temp').updateWithText(icon.outerHTML()+temp+'&deg;', 1000);
+			$('.temp').updateWithText(icon.outerHTML() + round1Dec(json.main.temp) + '&deg;', 1000);
 
 			var now = new Date();
-			var sunrise = new Date(json.sys.sunrise*1000).toTimeString().substring(0,5);
-			var sunset = new Date(json.sys.sunset*1000).toTimeString().substring(0,5);
+			var sunrise = new Date(json.sys.sunrise*1000).toTimeString().substring(0, 5);
+			var sunset = new Date(json.sys.sunset*1000).toTimeString().substring(0, 5);
 
-			var windString = '<span class="wi wi-strong-wind xdimmed"></span> ' + kmh2beaufort(wind) ;
+			var windString = '<span class="wi wi-strong-wind xdimmed"></span> ' + kmh2beaufort(round1Dec(json.wind.speed));
 			var sunString = '<span class="wi wi-sunrise xdimmed"></span> ' + sunrise;
 			if (json.sys.sunrise*1000 < now && json.sys.sunset*1000 > now) {
 				sunString = '<span class="wi wi-sunset xdimmed"></span> ' + sunset;
 			}
 
-			$('.windsun').updateWithText(windString+' '+sunString, 1000);
+			$('.windsun').updateWithText(windString + ' ' + sunString, 1000);
 		});
 	}
 
 	function updateWeatherForecast() {
-		$.getJSON('http://api.openweathermap.org/data/2.5/forecast', weatherParams, function(json, textStatus) {
+		$.getJSON('http://api.openweathermap.org/data/2.5/forecast', weatherParams, function(json) {
 
 			var forecastData = {};
 
@@ -237,9 +232,9 @@ var mainMirror = (function () {
 
 				if (forecastData[dateKey] == undefined) {
 					forecastData[dateKey] = {
-						'timestamp':forecast.dt * 1000,
-						'temp_min':forecast.main.temp,
-						'temp_max':forecast.main.temp,
+						'timestamp': forecast.dt * 1000,
+						'temp_min': forecast.main.temp,
+						'temp_max': forecast.main.temp,
 						'weather': {}
 					};
 				} else {
@@ -253,14 +248,13 @@ var mainMirror = (function () {
 			var opacity = 1;
 			for (var i in forecastData) {
 				var forecast = forecastData[i];
-				var dt = new Date(forecast.timestamp);
 				var row = $('<tr />').css('opacity', opacity);
-		
-				row.append($('<td/>').addClass('day').html(moment.weekdaysShort(dt.getDay())));
+
+				row.append($('<td/>').addClass('day').html(moment.weekdaysShort(new Date(forecast.timestamp).getDay())));
 				row.append($('<td/>').addClass('temp-min').html(round1Dec(forecast.temp_min)));
 				row.append($('<td/>').addClass('temp-max').html(round1Dec(forecast.temp_max)));
 				row.append($('<td/>').append(addWeatherClass($('<span/>'), forecast.weather, true)));
-		
+
 				forecastTable.append(row);
 				opacity -= 0.155;
 			}
