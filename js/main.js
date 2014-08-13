@@ -1,12 +1,14 @@
-jQuery.fn.updateWithText = function(text, speed) {
+jQuery.fn.updateWithText = function(text, speed1, speed2) {
 	var dummy = $('<div/>').html(text);
 
 	if ($(this).html() != dummy.html())
 	{
-		$(this).fadeOut(speed/2, function() {
+		$(this).fadeOut(speed1/2, function() {
 			$(this).html(text);
-			$(this).fadeIn(speed/2, function() {
-				//done
+			$(this).fadeIn(speed1/2, function() {
+				if (speed2) {
+					$(this).fadeOut(speed2);
+				}
 			});
 		});
 	}
@@ -171,7 +173,7 @@ var mainMirror = (function () {
 			opacity -= 1 / eventList.length;
 		}
 
-		$('.calendar').updateWithText(table,1000);
+		$('.calendar').updateWithText(table, 1000);
 	}
 
 	var lastCompliment = null;
@@ -182,7 +184,7 @@ var mainMirror = (function () {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}
 
-		$('.compliment').updateWithText(compliments[compliment], 4000);
+		$('.compliment').updateWithText(compliments[compliment], 4000, 8000);
 
 		lastCompliment = compliment;
 	}
