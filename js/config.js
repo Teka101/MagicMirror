@@ -5,9 +5,9 @@ var lang = window.navigator.language;
 
 //change weather params here:
 var weatherParams = {
-    'q':'Baarn,Netherlands',
-    'units':'metric',
-    'lang':lang
+    'q': 'Leiden,Netherlands',
+    'units': 'metric',
+    'lang': lang
 };
 
 // compliments:

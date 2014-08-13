@@ -35,32 +35,39 @@ function kmh2beaufort(kmh) {
 
 function addWeatherClass(elt, weather, small) {
 	var iconTable = {
-			'01d':'wi-day-sunny',
-			'02d':'wi-day-cloudy',
-			'03d':'wi-cloudy',
-			'04d':'wi-cloudy-windy',
-			'09d':'wi-showers',
-			'10d':'wi-rain',
-			'11d':'wi-thunderstorm',
-			'13d':'wi-snow',
-			'50d':'wi-fog',
-			'01n':'wi-night-clear',
-			'02n':'wi-night-cloudy',
-			'03n':'wi-night-cloudy',
-			'04n':'wi-night-cloudy',
-			'09n':'wi-night-showers',
-			'10n':'wi-night-rain',
-			'11n':'wi-night-thunderstorm',
-			'13n':'wi-night-snow',
-			'50n':'wi-night-alt-cloudy-windy'
-		};
+		'01d':'wi-day-sunny',
+		'02d':'wi-day-cloudy',
+		'03d':'wi-cloudy',
+		'04d':'wi-cloudy-windy',
+		'09d':'wi-showers',
+		'10d':'wi-rain',
+		'11d':'wi-thunderstorm',
+		'13d':'wi-snow',
+		'50d':'wi-fog',
+		'01n':'wi-night-clear',
+		'02n':'wi-night-cloudy',
+		'03n':'wi-night-cloudy',
+		'04n':'wi-night-cloudy',
+		'09n':'wi-night-showers',
+		'10n':'wi-night-rain',
+		'11n':'wi-night-thunderstorm',
+		'13n':'wi-night-snow',
+		'50n':'wi-night-alt-cloudy-windy'
+	};
 
 	var iconClass = iconTable[weather.icon];
 	elt.addClass('icon' + (!!small ? '-small' : '')).addClass('dimmed').addClass('wi').addClass(iconClass);
 	return elt;
 }
 
-jQuery(document).ready(function($) {
+
+function repeat(func, interval) {
+	func();
+	setInterval(func, interval);
+}
+
+
+$(function() {
 
 	var news = [];
 	var newsIndex = 0;
@@ -72,51 +79,28 @@ jQuery(document).ready(function($) {
 
     moment.lang(lang);
 
-	//connect do Xbee monitor
-	var socket = io.connect('http://rpi-alarm.local:8082');
-	socket.on('dishwasher', function (dishwasherReady) {
-		if (dishwasherReady) {
-			$('.dishwasher').fadeIn(2000);
-			$('.lower-third').fadeOut(2000);
-		} else {
-			$('.dishwasher').fadeOut(2000);
-			$('.lower-third').fadeIn(2000);
-		}
-	});
-
-
-	(function checkVersion()
-	{
+	repeat(function checkVersion() {
 		$.getJSON('githash.php', {}, function(json, textStatus) {
 			if (json) {
 				if (json.gitHash != gitHash) {
 					window.location.reload();
-					window.location.href=window.location.href;
+					window.location.href = window.location.href;
 				}
 			}
 		});
-		setTimeout(function() {
-			checkVersion();
-		}, 3000);
-	})();
+	}, 3000);
 
-	(function updateTime()
-	{
+	repeat(function updateTime() {
         var now = moment();
         var date = now.format('LLLL').split(' ',4);
         date = date[0] + ' ' + date[1] + ' ' + date[2] + ' ' + date[3];
 
 		$('.date').html(date);
-		$('.time').html(now.format('HH') + ':' + now.format('mm') + '<span class="sec">'+now.format('ss')+'</span>');
+		$('.time').html(now.format('HH') + ':' + now.format('mm') + '<span class="sec">' + now.format('ss') + '</span>');
+	}, 1000);
 
-		setTimeout(function() {
-			updateTime();
-		}, 1000);
-	})();
-
-	(function updateCalendarData()
-	{
-		new ical_parser("calendar.php", function(cal){
+	(function updateCalendarData() {
+		new ical_parser("calendar.php", function(cal) {
         	events = cal.getEvents();
         	eventList = [];
 
@@ -143,15 +127,13 @@ jQuery(document).ready(function($) {
 					}
         		}
 
-        		var days, seconds, startDate;
+        		var seconds, startDate;
                 if (e.startDate == undefined){
                     //some old events in Gmail Calendar is "start_date"
                     //FIXME: problems with Gmail's TimeZone
-            		days = moment(e.DTSTART).diff(moment(), 'days');
             		seconds = moment(e.DTSTART).diff(moment(), 'seconds');
                     startDate = moment(e.DTSTART);
                 } else {
-            		days = moment(e.startDate).diff(moment(), 'days');
             		seconds = moment(e.startDate).diff(moment(), 'seconds');
                     startDate = moment(e.startDate);
                 }
@@ -159,10 +141,10 @@ jQuery(document).ready(function($) {
         		//only add fututre events, days doesn't work, we need to check seconds
         		if (seconds >= 0) {
         			var time_string = (seconds <= 60*60*5 || seconds >= 60*60*24*2) ? moment(startDate).fromNow() : moment(startDate).calendar();
-	        		eventList.push({'description':e.SUMMARY,'seconds':seconds,'days':time_string});
+	        		eventList.push({ 'description': e.SUMMARY, 'seconds': seconds, 'days': time_string });
         		}
         	};
-        	eventList.sort(function(a,b) { return a.seconds-b.seconds; });
+        	eventList.sort(function(a, b) { return a.seconds-b.seconds; });
 
         	setTimeout(function() {
         		updateCalendarData();
@@ -170,8 +152,7 @@ jQuery(document).ready(function($) {
     	});
 	})();
 
-	(function updateCalendar()
-	{
+	repeat(function updateCalendar() {
 		table = $('<table/>').addClass('xsmall').addClass('calendar-table');
 		opacity = 1;
 
@@ -188,14 +169,9 @@ jQuery(document).ready(function($) {
 		}
 
 		$('.calendar').updateWithText(table,1000);
+	}, 1000);
 
-		setTimeout(function() {
-        	updateCalendar();
-        }, 1000);
-	})();
-
-	(function updateCompliment()
-	{
+	repeat(function updateCompliment() {
         //see compliments.js
 		while (compliment == lastCompliment) {
 			compliment = Math.floor(Math.random()*compliments.length);
@@ -204,14 +180,9 @@ jQuery(document).ready(function($) {
 		$('.compliment').updateWithText(compliments[compliment], 4000);
 
 		lastCompliment = compliment;
+	}, 30000);
 
-		setTimeout(function() {
-			updateCompliment(true);
-		}, 300000);
-
-	})();
-
-	(function updateCurrentWeather() {
+	repeat(function updateCurrentWeather() {
 		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
 
 			var temp = roundVal(json.main.temp);
@@ -238,13 +209,9 @@ jQuery(document).ready(function($) {
 
 			$('.windsun').updateWithText(windString+' '+sunString, 1000);
 		});
+	}, 60000);
 
-		setTimeout(function() {
-			updateCurrentWeather();
-		}, 60000);
-	})();
-
-	(function updateWeatherForecast() {
+	repeat(function updateWeatherForecast() {
 			$.getJSON('http://api.openweathermap.org/data/2.5/forecast', weatherParams, function(json, textStatus) {
 
 			var forecastData = {};
@@ -288,13 +255,9 @@ jQuery(document).ready(function($) {
 
 			$('.forecast').updateWithText(forecastTable, 1000);
 		});
+	}, 60000);
 
-		setTimeout(function() {
-			updateWeatherForecast();
-		}, 60000);
-	})();
-
-	(function fetchNews() {
+	repeat(function fetchNews() {
 		$.feedToJson({
 			feed:'http://feeds.nos.nl/nosjournaal?format=rss',
 			//feed:'http://www.nu.nl/feeds/rss/achterklap.rss',
@@ -307,20 +270,14 @@ jQuery(document).ready(function($) {
 				}
 			}
 		});
-		setTimeout(function() {
-			fetchNews();
-		}, 60000);
-	})();
+	}, 60000);
 
-	(function showNews() {
+	repeat(function showNews() {
 		var newsItem = news[newsIndex];
 		$('.news').updateWithText(newsItem,2000);
 
 		newsIndex--;
 		if (newsIndex < 0) newsIndex = news.length - 1;
-		setTimeout(function() {
-			showNews();
-		}, 5500);
-	})();
+	}, 5500);
 
 });

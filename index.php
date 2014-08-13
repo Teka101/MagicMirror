@@ -21,13 +21,13 @@
 
 </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.feedToJSON.js"></script>
-<script src="js/ical_parser.js"></script>
-<script src="js/moment-with-langs.min.js"></script>
+<script src="js/lib/jquery.min.js"></script>
+<script src="js/contrib/jquery.feedToJSON.js"></script>
+<script src="js/contrib/ical_parser.js"></script>
+<script src="js/lib/moment-with-langs.min.js"></script>
+<script src="js/lib/socket.io.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/main.js?nocache=<?php echo md5(microtime()) ?>"></script>
-<script src="js/socket.io.min.js"></script>
 
 </body>
 </html>
