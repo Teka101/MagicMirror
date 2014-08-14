@@ -22,3 +22,5 @@ var compliments = [
     'Enjoy your day!'
 ];
 
+// TODO  move into magicMirror.config object
+

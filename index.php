@@ -18,15 +18,17 @@
 	<div class="lower-third center-hor"><div class="compliment light"></div></div>
 	<div class="bottom center-hor"><div class="news medium"></div></div>
 
-</div>
-
-<script src="js/lib/jquery.min.js"></script>
-<script src="js/contrib/jquery.feedToJSON.js"></script>
-<script src="js/contrib/ical_parser.js"></script>
-<script src="js/lib/moment-with-langs.min.js"></script>
-<script src="js/lib/socket.io.min.js"></script>
-<script src="js/config.js"></script>
-<script src="js/main.js?nocache=<?php echo md5(microtime()) ?>"></script>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/contrib/jquery.feedToJSON.js"></script>
+	<script src="js/contrib/ical_parser.js"></script>
+	<script src="js/lib/moment-with-langs.min.js"></script>
+	<script src="js/lib/socket.io.min.js"></script>
+	<script>var magicMirror = {};</script><?php /* namespace for Magic Mirror */ ?>
+	<script src="js/config.js"></script>
+	<script src="js/calendar.js?nocache=<?php echo md5(microtime()) ?>"></script>
+	<script src="js/news.js?nocache=<?php echo md5(microtime()) ?>"></script>
+	<script src="js/weather.js?nocache=<?php echo md5(microtime()) ?>"></script>
+	<script src="js/main.js?nocache=<?php echo md5(microtime()) ?>"></script>
 
 </body>
 </html>
