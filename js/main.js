@@ -23,7 +23,7 @@ jQuery.fn.outerHTML = function(s) {
 magicMirror.main = (function () {
 
 	$(function() {
-	    moment.lang(lang);
+	    moment.lang(magicMirror.config.lang);
 
 	    repeat(checkVersion, 3000);
 		repeat(updateTime, 1000);
@@ -49,9 +49,9 @@ magicMirror.main = (function () {
 	// reload after Git commit
 
 	function checkVersion() {
-		$.getJSON('githash.php', {}, function(json, textStatus) {
+		$.getJSON('githash.php', {}, function(json) {
 			if (json) {
-				if (json.gitHash != gitHash) {
+				if (json.gitHash !== gitHash) {
 					window.location.reload();
 					window.location.href = window.location.href;
 				}
@@ -78,6 +78,7 @@ magicMirror.main = (function () {
 
 	function updateCompliment() {
 		var compliment = null;
+		var compliments = magicMirror.config.compliments;
 		while (compliment === lastCompliment) {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}

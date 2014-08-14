@@ -1,26 +1,32 @@
-// for navigator language
-var lang = window.navigator.language;
-// you can change the language
-//var lang = 'en';
+magicMirror.config = (function() {
 
-//change weather params here:
-var weatherParams = {
-    'q': 'Leiden,Netherlands',
-    'units': 'metric',
-    'lang': lang
-};
+	/** Language setting. */
+	var lang = window.navigator.language;
+	/*
+	 * You can change the language, e.g. as:
+	 * <pre>
+	 * var lang = 'en';
+	 * </pre>
+	 */
 
-// compliments:
-var compliments = [
-    'Hey, handsome!',
-    'Hi, sexy!',
-    'Hello, beauty!',
-    'You look sexy!',
-    'Wow, you look hot!',
-    'Looking good today!',
-    'You look nice!',
-    'Enjoy your day!'
-];
+	return {
+		'lang':	lang,
+		'weatherParams': {
+		    'q':		'Leiden,Netherlands',
+		    'units':	'metric',
+		    'lang':		lang
+		},
+		'compliments': [
+            'Hey, handsome!',
+            'Hi, sexy!',
+            'Hello, beauty!',
+            'You look sexy!',
+            'Wow, you look hot!',
+            'Looking good today!',
+            'You look nice!',
+            'Enjoy your day!'
+		]
+	};
 
-// TODO  move into magicMirror.config object
+}());
 
