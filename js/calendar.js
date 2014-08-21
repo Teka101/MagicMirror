@@ -68,7 +68,7 @@ magicMirror.calendar = function() {
 			opacity -= 1 / eventList.length;
 		}
 
-		$('.calendar').updateWithText(table, 1000);
+		$('#calendar').updateWithText(table, 1000);
 	}
 
 	return {

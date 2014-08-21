@@ -13,10 +13,10 @@
 </head>
 <body>
 
-	<div class="top left"><div class="date small dimmed"></div><div class="time"></div><div class="calendar xxsmall"></div></div>
-	<div class="top right"><div class="windsun small dimmed"></div><div class="temp"></div><div class="forecast small dimmed"></div></div>
-	<div class="lower-third center-hor"><div class="compliment light"></div></div>
-	<div class="bottom center-hor"><div class="news medium"></div></div>
+	<div class="top left"><div id="date" class="small dimmed"></div><div id="time"></div><div id="calendar" class="xxsmall"></div></div>
+	<div class="top right"><div id="windsun" class="small dimmed"></div><div id="temp"></div><div id="forecast" class="small dimmed"></div></div>
+	<div class="lower-third center-hor"><div id="compliment" class="light"></div></div>
+	<div class="bottom center-hor"><div id="news" class="medium"></div></div>
 
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/contrib/jquery.feedToJSON.js"></script>

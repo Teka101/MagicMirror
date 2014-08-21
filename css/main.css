@@ -141,7 +141,7 @@ body, html {
 	padding-left: 5px;
 }
 
-.time .sec {
+#time .sec {
 	font-size: 25px;
 	color: #666;
 	padding-left: 5px;

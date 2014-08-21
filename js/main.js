@@ -69,8 +69,8 @@ magicMirror.main = function () {
 	    var date = now.format('LLLL').split(' ',4);
 	    date = date[0] + ' ' + date[1] + ' ' + date[2] + ' ' + date[3];
 
-		$('.date').html(date);
-		$('.time').html(now.format('HH') + ':' + now.format('mm') + '<span class="sec">' + now.format('ss') + '</span>');
+		$('#date').html(date);
+		$('#time').html(now.format('HH') + ':' + now.format('mm') + '<span class="sec">' + now.format('ss') + '</span>');
 	}
 
 
@@ -85,7 +85,7 @@ magicMirror.main = function () {
 			compliment = Math.floor(Math.random()*compliments.length);
 		}
 
-		$('.compliment').updateWithText(compliments[compliment], 4000, 8000);
+		$('#compliment').updateWithText(compliments[compliment], 4000, 8000);
 
 		lastCompliment = compliment;
 	}

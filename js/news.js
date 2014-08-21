@@ -20,7 +20,7 @@ magicMirror.news = function () {
 
 	function showNews() {
 		var newsItem = news[newsIndex];
-		$('.news').updateWithText(newsItem, 2000);
+		$('#news').updateWithText(newsItem, 2000);
 
 		newsIndex--;
 		if (newsIndex < 0) newsIndex = news.length - 1;

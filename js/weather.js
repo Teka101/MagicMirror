@@ -45,7 +45,7 @@ magicMirror.weather = function() {
 	function updateCurrentWeather() {
 		$.getJSON('http://api.openweathermap.org/data/2.5/weather', magicMirror.config.weatherParams, function(json) {
 			var icon = addWeatherClass($('<span/>'), json.weather[0]);
-			$('.temp').updateWithText(icon.outerHTML() + round1Dec(json.main.temp) + '&deg;', 1000);
+			$('#temp').updateWithText(icon.outerHTML() + round1Dec(json.main.temp) + '&deg;', 1000);
 
 			var now = new Date();
 			var sunrise = new Date(json.sys.sunrise*1000).toTimeString().substring(0, 5);
@@ -57,7 +57,7 @@ magicMirror.weather = function() {
 				sunString = '<span class="wi wi-sunset xdimmed"></span> ' + sunset;
 			}
 
-			$('.windsun').updateWithText(windString + ' ' + sunString, 1000);
+			$('#windsun').updateWithText(windString + ' ' + sunString, 1000);
 		});
 	}
 
@@ -99,7 +99,7 @@ magicMirror.weather = function() {
 				opacity -= 0.155;
 			}
 
-			$('.forecast').updateWithText(forecastTable, 1000);
+			$('#forecast').updateWithText(forecastTable, 1000);
 		});
 	}
 
