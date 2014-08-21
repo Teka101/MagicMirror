@@ -1,11 +1,13 @@
-magicMirror.news = (function () {
+magicMirror.news = function () {
+
+	"use strict";
 
 	var news = [];
 	var newsIndex = 0;
 
 	function fetchNews() {
 		$.feedToJson({
-			feed:'http://feeds.nos.nl/nosjournaal?format=rss',
+			feed: 'http://feeds.nos.nl/nosjournaal?format=rss',
 			success: function(data){
 				news = [];
 				for (var i in data.item) {
@@ -29,5 +31,5 @@ magicMirror.news = (function () {
 		'showNews':		showNews
 	};
 
-}());
+}();
 

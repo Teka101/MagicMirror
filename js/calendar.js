@@ -1,10 +1,12 @@
-magicMirror.calendar = (function() {
+magicMirror.calendar = function() {
+
+	"use strict";
 
 	var eventList = [];
 
 	function updateCalendarData() {
 		new ical_parser("calendar.php", function(cal) {
-	    	events = cal.getEvents();
+	    	var events = cal.getEvents();
 	    	eventList = [];
 
 	    	for (var i in events) {
@@ -52,8 +54,8 @@ magicMirror.calendar = (function() {
 	}
 
 	function updateCalendar() {
-		table = $('<table/>').addClass('xsmall').addClass('calendar-table');
-		opacity = 1;
+		var table = $('<table/>').addClass('xsmall').addClass('calendar-table');
+		var opacity = 1;
 
 		for (var i in eventList) {
 			var e = eventList[i];
@@ -74,5 +76,5 @@ magicMirror.calendar = (function() {
 		'updateCalendarData':	updateCalendarData
 	};
 
-}());
+}();
 

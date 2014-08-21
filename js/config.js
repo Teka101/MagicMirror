@@ -1,4 +1,4 @@
-magicMirror.config = (function() {
+magicMirror.config = function() {
 
 	/** Language setting. */
 	var lang = window.navigator.language;
@@ -28,5 +28,5 @@ magicMirror.config = (function() {
 		]
 	};
 
-}());
+}();
 

@@ -1,4 +1,6 @@
-magicMirror.weather = (function() {
+magicMirror.weather = function() {
+
+	"use strict";
 
 	function addWeatherClass(elt, weather, small) {
 		var iconTable = {
@@ -106,5 +108,5 @@ magicMirror.weather = (function() {
 		'updateWeatherForecast':	updateWeatherForecast
 	};
 
-}());
+}();
 

@@ -20,7 +20,9 @@ jQuery.fn.outerHTML = function(s) {
         : jQuery("<p>").append(this.eq(0).clone()).html();
 };
 
-magicMirror.main = (function () {
+magicMirror.main = function () {
+
+	"use strict";
 
 	$(function() {
 	    moment.lang(magicMirror.config.lang);
@@ -88,5 +90,5 @@ magicMirror.main = (function () {
 		lastCompliment = compliment;
 	}
 
-}());
+}();
 
