@@ -27,10 +27,10 @@ function ical_parser(feed_url, callback){
 				//On success, run callback.
 				callback(xmlhttp.responseText);
 			}
-		}
+		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send(null);
-	}
+	};
 	
 	/**
 	 * makeDate
@@ -46,14 +46,14 @@ function ical_parser(feed_url, callback){
 			day: ical_date.substr(6,2),
 			hour: ical_date.substr(9,2),
 			minute: ical_date.substr(11,2)
-		}
+		};
 		//Create JS date (months start at 0 in JS - don't ask)
 		dt.date = new Date(dt.year, (dt.month-1), dt.day, dt.hour, dt.minute);
 		//Get the full name of the given day
 		dt.dayname =["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dt.date.getDay()];
 		
 		return dt;
-	}
+	};
 	
 	/**
 	 * parseICAL
@@ -120,7 +120,7 @@ function ical_parser(feed_url, callback){
 		}
 		//Run this to finish proccessing our Events.
 		this.complete();
-	}
+	};
 	/**
 	 * complete
 	 * Sort all events in to a sensible order and run the original callback
@@ -132,7 +132,7 @@ function ical_parser(feed_url, callback){
 		});
 		//Run callback method, if was defined. (return self)
 		if(typeof callback == 'function') callback(this);
-	}
+	};
 	/**
 	 * getEvents
 	 * return all events found in the ical file.
@@ -141,7 +141,7 @@ function ical_parser(feed_url, callback){
 	 */
 	this.getEvents = function(){
 		return this.events;
-	}
+	};
 	
 	/**
 	 * getFutureEvents
@@ -157,7 +157,7 @@ function ical_parser(feed_url, callback){
 			if(itm.DTSTART > current_date) future_events.push(itm);
 		});
 		return future_events;
-	}
+	};
 	
 	/**
 	 * load
@@ -173,7 +173,7 @@ function ical_parser(feed_url, callback){
 			tmp_this.raw_data = data;
 			tmp_this.parseICAL(data);
 		});
-	}
+	};
 	
 	//Store this so we can use it in the callback from the load function.
 	var tmp_this = this;
