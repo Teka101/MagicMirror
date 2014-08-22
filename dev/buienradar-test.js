@@ -17,17 +17,15 @@ $(function() {
 		}
 
 		$('.inlinesparkline').sparkline(bui, {
-			type : 'line',
-			width : '80',
-			height : '25',
-			lineColor : '#adadad',
-			fillColor : '#adadad',
-			spotColor : undefined,
-			minSpotColor : undefined,
-			maxSpotColor : undefined,
-			highlightSpotColor : undefined,
-			chartRangeMin : 0,
-			chartRangeMax : 255
+		    type: 'line',
+		       lineColor: '#c6c6c6',
+		       fillColor: '#c6c6c6',
+		       spotColor: '#c6c6c6',
+		       minSpotColor: '#c6c6c6',
+		       maxSpotColor: '#c6c6c6',
+		       highlightSpotColor: '#c6c6c6',
+		       highlightLineColor: '#c6c6c6',
+		       spotRadius: 0
 		});
 		/* ik krijg de spots er nog niet uit, geen idee waarom ze oranje blijven */
 	}, 'text');
