@@ -43,7 +43,8 @@ magicMirror.weather = function() {
 	}
 
 	function updateCurrentWeather() {
-		$.getJSON('http://api.openweathermap.org/data/2.5/weather', magicMirror.config.weatherParams, function(json) {
+		magicMirror.config.weatherParams['action'] = 'weather';
+		$.getJSON('weather.php', magicMirror.config.weatherParams, function(json) {
 			var icon = addWeatherClass($('<span/>'), json.weather[0]);
 			$('#temp').updateWithText(icon.outerHTML() + round1Dec(json.main.temp) + '&deg;', 1000);
 
@@ -62,7 +63,8 @@ magicMirror.weather = function() {
 	}
 
 	function updateWeatherForecast() {
-		$.getJSON('http://api.openweathermap.org/data/2.5/forecast', magicMirror.config.weatherParams, function(json) {
+		magicMirror.config.weatherParams['action'] = 'forecast';
+		$.getJSON('weather.php', magicMirror.config.weatherParams, function(json) {
 
 			var forecastData = {};
 
