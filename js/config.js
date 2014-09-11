@@ -12,7 +12,7 @@ magicMirror.config = function() {
 	return {
 		'lang':	lang,
 		'weatherParams': {
-		    'q':		'Leiden,Netherlands',
+		    'q':		'Paris,France',
 		    'units':	'metric',
 		    'lang':		lang
 		},
