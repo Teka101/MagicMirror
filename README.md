@@ -1,6 +1,13 @@
 MagicMirror
 ===========
 
+Changes:
+ * Support HTTPS (move all external link to php)
+ * Remove Yahoo API RSS to JSON (PHP do it better !)
+ * Move to weather to Paris,France
+
+Original
+========
 The super magic interface of my personal Magic Mirror. More information about this project can be found on the [blog](http://michaelteeuw.nl/tagged/magicmirror).
 
 Modify js/config.js to change some general variables (language, weather location, compliments) and calendar.php to add your own ICS calendar.
