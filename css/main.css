@@ -180,7 +180,10 @@ body, html {
 	padding-left: 20px;
 	text-align: right;
 }
-
+.separator {
+	display: inline;
+	padding-right: 40px;
+}
 .dishwasher {
 	background-color: white;
 	color: black;

@@ -32,6 +32,7 @@ magicMirror.main = function () {
 		repeat(updateCompliment, 30000);
 		repeat(magicMirror.calendar.updateCalendarData, 60000);
 		repeat(magicMirror.calendar.updateCalendar, 1000);
+		repeat(magicMirror.domoticz.updateDomoticz, 60000);
 		repeat(magicMirror.news.fetchNews, 60000);
 		repeat(magicMirror.news.showNews, 5500);
 		repeat(magicMirror.weather.updateCurrentWeather, 60000);
