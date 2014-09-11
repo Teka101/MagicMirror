@@ -19,7 +19,6 @@
 	<div class="bottom center-hor"><div id="news" class="medium"></div></div>
 
 	<script src="js/lib/jquery.min.js"></script>
-	<script src="js/contrib/jquery.feedToJSON.js"></script>
 	<script src="js/contrib/ical_parser.js"></script>
 	<script src="js/lib/moment-with-langs.min.js"></script>
 	<script src="js/lib/socket.io.min.js"></script>
