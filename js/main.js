@@ -81,13 +81,16 @@ magicMirror.main = function () {
 	function updateCompliment() {
 		var compliment = null;
 		var compliments = magicMirror.config.compliments;
-		while (compliment === lastCompliment) {
-			compliment = Math.floor(Math.random()*compliments.length);
+
+		if (compliments) {
+			while (compliment === lastCompliment) {
+				compliment = Math.floor(Math.random()*compliments.length);
+			}
+
+			$('#compliment').updateWithText(compliments[compliment], 4000, 8000);
+
+			lastCompliment = compliment;
 		}
-
-		$('#compliment').updateWithText(compliments[compliment], 4000, 8000);
-
-		lastCompliment = compliment;
 	}
 
 }();

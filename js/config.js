@@ -16,7 +16,7 @@ magicMirror.config = function() {
 		    'units':	'metric',
 		    'lang':		lang
 		},
-		'compliments': [
+		/*'compliments': [
             'Hey, handsome!',
             'Hi, sexy!',
             'Hello, beauty!',
@@ -25,7 +25,7 @@ magicMirror.config = function() {
             'Looking good today!',
             'You look nice!',
             'Enjoy your day!'
-		]
+		]*/
 	};
 
 }();
