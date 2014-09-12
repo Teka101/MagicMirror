@@ -1,6 +1,8 @@
 MagicMirror
 ===========
 
+You have to install a web server with PHP support.
+
 Changes:
  * Support HTTPS (move all external link to php)
  * Remove Yahoo API RSS to JSON (PHP do it better !)
