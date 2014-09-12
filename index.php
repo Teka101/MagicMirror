@@ -14,7 +14,7 @@
 <body>
 
 	<div class="top left"><div id="date" class="small dimmed"></div><div id="time"></div><div id="calendar" class="xxsmall"></div></div>
-	<div class="top right"><div id="windsun" class="small dimmed"></div><div id="temp" class="separator"></div><span class="icon dimmed wi wi-thermometer"> </span><span id="localtemp"/><div id="forecast" class="small dimmed"></div></div>
+	<div class="top right"><div id="windsun" class="small dimmed"></div><div id="temp" class="separator"></div><span class="icon dimmed wi wi-thermometer"> </span><span id="localtemp"></span><div id="forecast" class="small dimmed"></div></div>
 	<div class="lower-third center-hor"><div id="compliment" class="light"></div></div>
 	<div class="bottom center-hor"><div id="news" class="medium"></div></div>
 
