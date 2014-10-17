@@ -6,14 +6,15 @@ magicMirror.news = function () {
 	var newsIndex = 0;
 
 	function fetchNews() {
-		$.getJSON('news.php', {}, function(json){
-			var data = json.channel;
-			news = [];
-			for (var i in data.item) {
-				var item = data.item[i];
-				news.push(item.title);
-			}
-			});
+		if (magicMirror.config.news == true)
+			$.getJSON('news.php', {}, function(json){
+				var data = json.channel;
+				news = [];
+				for (var i in data.item) {
+					var item = data.item[i];
+					news.push(item.title);
+				}
+				});
 	}
 
 	function showNews() {
@@ -26,7 +27,7 @@ magicMirror.news = function () {
 
 	return {
 		'fetchNews':	fetchNews,
-		'showNews':		showNews
+		'showNews':	showNews
 	};
 
 }();

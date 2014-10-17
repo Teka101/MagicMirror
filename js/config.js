@@ -11,6 +11,7 @@ magicMirror.config = function() {
 
 	return {
 		'lang':	lang,
+		'news': false,
 		'weatherParams': {
 		    'q':		'Paris,France',
 		    'units':	'metric',
